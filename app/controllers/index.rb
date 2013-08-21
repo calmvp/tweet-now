@@ -4,6 +4,11 @@ get '/' do
 end
 
 post '/tweet' do
-  CLIENT.update(params[:body])
-  erb :index
+  if request.xhr?
+    @tweet = CLIENT.update(params[:body])
+    p @tweet
+  	erb :_tweet_success, layout: false
+  else
+    erb :index
+  end
 end

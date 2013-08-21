@@ -1,7 +1,15 @@
 $(document).ready(function() {
-  // This is called after the document has loaded in its entirety
-  // This guarantees that any elements we bind to will exist on the page
-  // when we try to bind to them
-
-  // See: http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+  $('#tweet_form').on('submit', function(event){
+  	event.preventDefault();
+  	$("input[type='submit']").prop('disabled', true);
+  	$('.container').append('<span class="inprogress">Tweet in Progress</span>');
+  	$.post("/tweet",$(this).serialize(), function(response){
+  		$('.inprogress').remove();
+  		console.log(response)
+  		$('.container').append(response);
+  		$("input[type='submit']").prop('disabled', false);
+  	});
+  });
 });
+
+//Refactor to use Ajax method and return an error message if necessary.
